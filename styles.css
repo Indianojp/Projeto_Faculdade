@@ -1,0 +1,794 @@
+<!--* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: "Merryweather";
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Nexa";
+    src: url("assent/nexatext-trial-light.otf");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Nexa";
+    src: url("assent/nexatext-trial-regular.otf");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Nexa";
+    src: url("assent/nexatext-trial-bold.otf");
+    font-weight: 700;
+    font-style: normal;
+}
+
+body {
+    color: #EEF2EE;
+}
+
+h1 {
+    font-size: 50px;
+    color: #1e3a5f;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 60px;
+    margin-bottom: 32px;
+    text-align: center;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+input,
+button {
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+button {
+    margin-top: 8px;
+    font-weight: 700;
+    color: rgba(0 0 0 / .8);
+    padding: 16px;
+    transition: all .3s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+button {
+        background: linear-gradient(90deg, #1e3a5f, #2967ba 0%, #eef2ee 100%)
+    }
+}
+
+p {
+    margin-bottom: 32px;
+    width: 400px;
+    text-align: center;
+    color: rgba(255 255 255 / .8);
+}
+
+input {
+    background-color: rgba(225 255 255 / .2);
+    color: rgba(255 255 255 / .8);
+}
+
+input::placeholder {
+    color: rgba(255 255 255 / .5);
+}
+
+#codigo{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.navbar-blue {
+    background-color: #1e3a5f;
+}
+
+/* Imagem da Logo */
+.navbar-brand-blue img {
+    height: 6vh;
+    width: 6vh;
+    margin-left: 5px;
+}
+
+.container-fluid {
+    display: flex;
+    align-items: center;
+}
+
+/*Texto da Logo */
+.brand-logo {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+section.containerPai {
+    width: 100%;
+    height: 100vh;
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.cardd {
+    width: 90%;
+    height: 80vh;
+    background-color: rgb(30, 58, 95) ;
+    border-radius: 32px;
+    padding: 32px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.esquerda-1,.direita-1 {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    position: relative;
+
+}
+
+.formLogin,.facaLogin,.formCadastro,.entreSala {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+.facaLogin,.entreSala {
+    display: flex;
+    position: absolute;
+
+    h2,
+    p {
+        color: rgba(0 0 0/ .8); 
+    }
+
+    button {
+        background-color: rgba(255 255 255 / .2);
+        border: 2px solid rgba(0 0 0 / .8);
+    }
+
+}
+
+/*Background Móvel*/
+
+.cardd::after {
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-image: url("images/gradiente.webp");
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+
+/* Login Active */
+
+.cardd.loginActive .facaLogin {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cardd.loginActive .entreSala {
+    transform: translateX(0);
+    transition: all .3s .3s;
+    opacity: 1;
+}
+
+.cardd.loginActive .formLogin {
+    transition: all .3s .3s;
+    opacity: 1;
+}
+
+.cardd.loginActive .formCadastro {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cardd.loginActive::after {
+    transform: translateX(50%);
+}
+
+
+/* Aluno Active */
+
+.cardd.cadastroActive .entreSala {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cardd.cadastroActive .facaLogin {
+    transform: translateX(0);
+    transition: all .3s .3s;
+    opacity: 1;
+}
+
+.cardd.cadastroActive .formCadastro {
+    transition: all .3s .3s;
+    opacity: 1;
+}
+
+.cardd.cadastroActive .formLogin {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cardd.cadastroActive::after {
+    transform: translateX(-50%);
+}
+
+
+/*Transitions*/
+
+.cardd::after {
+    transition: all 1s;
+}
+
+.entreSala {
+    transform: translateX(200%);
+    transition: all .3s 0;
+    opacity: 0;
+}
+
+.formLogin {
+    transition: all .3s 0;
+    opacity: 0;
+
+}
+
+.facaLogin {
+    transform: translateX(-200%);
+    transition: all .3s 0;
+    opacity: 0;
+}
+
+.formCadastro {
+    transition: all .3s 0;
+    opacity: 0;
+
+}
+
+
+
+/*Carrosel*/
+.button1{
+    text-align: center;
+    margin-top:10px;
+    margin-bottom: 0px;
+}
+
+.carousel-inner img {
+    height: 400px;
+    object-fit: cover;
+}
+
+.title-section {
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.title-section h1 {
+    font-weight: bold;
+    color: #1e3a5f;
+}
+
+.title-section p  {
+    color:#000000;
+    font-size: 1rem;
+
+}
+.text2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: -20px;
+}
+.text2 h1 {
+    color: #1e3a5f;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.text2 p {
+    color:#000000;
+    text-align: center ;
+    width: 750px;
+    margin: 0 auto;
+}
+
+.carousel-img {
+    width: 100%;
+    height: auto;
+}
+
+.carousel-indicators button {
+    background-color:#1e3a5f;
+}
+
+.accordion {
+    height: 400px;
+    width: auto;
+}
+.accordion-button {
+    background-color: transparent;
+    color:#1e3a5f;
+    font-weight: bold;
+}
+
+.accordion-body {
+    background-color: #cfdfff;
+    font-size: 0.95rem;
+    color: #333;
+    height: auto;
+}
+
+.button-area {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.btn-custom {
+    background-color:#1e3a5f;
+    color: white;
+    border-radius: 30px;
+    padding: 15px 20px;
+    border: none;
+    margin-bottom: 0px;
+}
+
+.btn-custom:hover,
+.btn-custom:focus {
+    background-color: #173056;
+    color: white;
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(30, 58, 95,);
+}
+
+
+.info-box {
+    background-color: #1e3a5f;
+    color: white;
+    padding: 30px 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 100px;
+    align-items: center;
+}
+
+.info-box h3{
+    color: #ffffff;
+    text-align: center;
+}
+
+.info-box p{
+    color:#FFFFFF;
+    font-size: 16px;
+    text-align: center;
+    max-width: 390px;
+}
+
+#graficoPizza {
+    max-width: 50vh;
+    max-height: 50vh;
+    margin-left: 50px;
+}
+
+/*Pagina Professor - Painel Professor*/
+
+.opcao {
+  display: flex;
+  align-items: center;
+  background: #eee;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.opcao input.cor {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.opcao .letra {
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 16px;
+  color: #1e3a5f;
+}
+
+.opcao input.texto {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #fff;
+  margin-right: 10px;
+  color: #000000;
+}
+
+.opcao button.remover {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+button {
+  padding: 10px 15px;
+  background: #1e3a5f;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #2e5d9a;
+}
+
+.qrcode-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#qrcode {
+  margin-top: 20px;
+  background: white;
+  padding: 60px;
+  border: 1px solid #ccc;
+  align-items: center;
+  display: block;
+  justify-content: center;
+}
+
+#codigo{
+    font-size: 18px;
+    color: #1e3a5f;
+    margin-top: 10px;
+    margin-left: 42%;
+}
+
+.layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start center;
+  flex-wrap: wrap;
+  height: 80vh;
+}
+
+.esquerda, .direita {
+  flex: 1;
+  min-width: 280px;
+}
+
+.direita {
+  background: #EEF2EE;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.direita button {
+    margin-left: 80px;
+}
+
+.btn-avancar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #1e3a5f;
+  transition: transform 0.2s ease;
+}
+
+.btn-avancar:hover {
+  transform: scale(0.5);
+}
+
+
+/* Pagina Professor 2 - Monitoramento*/
+
+.mon-header {
+    text-align: center;
+    padding: 30px 20px 10px;
+}
+
+.mon-sala-box {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #1c355e;
+}
+
+
+.mon-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 30px 20px;
+    flex-wrap: wrap;
+}
+
+
+.mon-left {
+    flex: 1;
+    max-width: 500px;
+    width: 100%;
+}
+
+.mon-grafico-box {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    height: 440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.mon-right {
+    flex: 1;
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.mon-info-box {
+    background-color: #1c355e;
+    color: white;
+    padding: 2px;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1em;
+    justify-items: center;
+}
+
+
+.mon-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.mon-buttons button {
+    width: 100%;
+    min-height: 40px;
+    font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
+    .mon-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mon-left,
+    .mon-right {
+        max-width: 100%;
+    }
+}
+
+.btn-personalizado {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 100%;
+}
+
+
+.azul {
+    background-color: #0d6efd;
+}
+.azul:hover {
+    background-color: #0b5ed7;
+}
+
+.amarelo {
+    background-color: #ffc107;
+    color: #1c1c1c;
+}
+.amarelo:hover {
+    background-color: #e0a800;
+}
+
+.verde {
+    background-color: #33CC66;
+}
+.verde:hover {
+    background-color: #22af51;
+}
+
+.lilas {
+    background-color: #9B59B6;
+}
+.lilas:hover {
+    background-color: #8849a0;
+}
+
+.vermelho {
+    background-color: #E74C3C;
+}
+.vermelho:hover {
+    background-color: #c73626;
+}
+
+
+/*Pagina do Aluno*/
+
+body.aluno-body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  overflow: hidden; 
+}
+
+.aluno-titulo-principal {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #1c355e;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+
+.aluno-painel {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 40px;
+  background: #f4f4f4;
+  min-height: 100vh;
+}
+
+
+.aluno-coluna-esquerda {
+  flex: 1;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+.aluno-coluna-direita {
+  flex: 1;
+  background: #fdfdfd;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+
+.aluno-titulo {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+.aluno-status-msg {
+  font-weight: bold;
+  color: #c0392b;
+  margin-bottom: 20px;
+}
+
+
+.aluno-opcoes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.aluno-opcao-btn {
+  padding: 12px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.aluno-opcao-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+.aluno-selecionada {
+  outline: 3px solid #34495e;
+}
+
+
+.aluno-btn-enviar {
+  margin-top: 20px;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.aluno-btn-enviar:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+
+.aluno-grafico {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin: auto;
+}

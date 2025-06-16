@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responder Pergunta</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="aluno-body">
+    <h1 class="aluno-titulo-principal">Sua Resposta Conta!</h1>
+  <div class="aluno-painel">
+    <div class="aluno-coluna-esquerda">
+      <div id="aluno-mensagem-status" class="aluno-status-msg"></div>
+
+      <div id="aluno-pergunta-container" class="aluno-pergunta" style="display: none;">
+        <h2 class="aluno-titulo">Escolha uma opção</h2>
+        <div id="aluno-opcoes" class="aluno-opcoes-container"></div>
+        <button id="aluno-btn-enviar" class="aluno-btn-enviar">Enviar</button>
+      </div>
+    </div>
+
+    <div class="aluno-coluna-direita">
+      <canvas id="aluno-grafico-respostas" class="aluno-grafico"></canvas>
+    </div>
+  </div>
+
+  <script src="aluno.js"></script>
+</body>
+</html>
+
+
+
+

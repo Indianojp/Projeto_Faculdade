@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Monitoramento da Sala</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="mon-header">
+    <h1 class="mon-titulo">Monitoramento da Sala</h1>
+    <div class="mon-sala-box">
+      Código da Sala: <span id="mon-codigo-sala" class="mon-sala-codigo">—</span>
+    </div>
+  </header>
+
+
+  <div class="mon-container">
+    <div class="mon-left">
+      <div class="mon-grafico-box">
+        <canvas id="mon-grafico-pizza"></canvas>
+      </div>
+    </div>
+
+    <div class="mon-right">
+      <div class="mon-info-box">
+        <p>Respostas registradas: <strong id="mon-respostas-contador">0</strong></p>
+        <p>Total de participantes: <strong id="mon-pessoas-contador">0</strong></p>
+      </div>
+
+      <div class="mon-buttons">
+        <button id="mon-btn-copiar-grafico" class="btn-personalizado lilas">
+          <i class="bi bi-clipboard"></i> Copiar Gráfico
+        </button>
+        <button id="mon-btn-reset-respostas" class="btn-personalizado amarelo">Resetar Respostas</button>
+        <button id="mon-btn-reset-sala" class="btn-personalizado verde">Resetar Sala</button>
+        <button id="mon-btn-voltar" class="btn-personalizado azul">Voltar</button>
+        <button id="mon-btn-sair" class="btn-personalizado vermelho">Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="professor_mon.js"></script>
+</body>
+</html>
