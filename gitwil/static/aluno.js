@@ -9,21 +9,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const opcoesContainer = document.getElementById("aluno-opcoes");
     const btnEnviar = document.getElementById("aluno-btn-enviar");
     const canvasGrafico = document.getElementById("aluno-grafico-respostas");
-
-    let respostaJaEnviada = localStorage.getItem(`resposta_${codigo}`);
+    const elContadorRespondentes = document.getElementById("aluno-respondentes-count");
 
     async function carregarDados() {
         try {
             const res = await fetch(`/api/sala/${codigo}`);
             if (!res.ok) throw new Error("Sala não encontrada");
 
-            const { opcoes, respostas_ativas, respostas } = await res.json();
-
-            if (!respostas_ativas) btnEnviar.disabled = true;
-            else btnEnviar.disabled = false;
+            const { opcoes, respostas_ativas, respostas, respondentes } = await res.json();
 
             status.style.display = "none";
             container.style.display = "block";
+
+            if (elContadorRespondentes && Array.isArray(respondentes)) {
+                elContadorRespondentes.textContent = respondentes.length;
+            }
 
             if (opcoesContainer.children.length === 0) {
                 // Gera botões só uma vez
@@ -35,13 +35,29 @@ document.addEventListener("DOMContentLoaded", async () => {
                     btn.dataset.letra = opcao.letra;
 
                     btn.onclick = () => {
-                        document.querySelectorAll(".aluno-opcao-btn").forEach(b => b.classList.remove("aluno-selecionada"));
-                        btn.classList.add("aluno-selecionada");
+                        if (!btnEnviar.disabled) {
+                            document.querySelectorAll(".aluno-opcao-btn").forEach(b => b.classList.remove("aluno-selecionada"));
+                            btn.classList.add("aluno-selecionada");
+                        }
                     };
 
                     opcoesContainer.appendChild(btn);
                 });
             }
+
+            let userId = sessionStorage.getItem('user_id');
+            if (!userId) {
+                userId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2, 14);
+                sessionStorage.setItem('user_id', userId);
+            }
+
+            // Bloqueia se necessário
+            const bloqueado = !respostas_ativas || (respondentes && respondentes.includes(userId));
+            btnEnviar.disabled = bloqueado;
+            document.querySelectorAll(".aluno-opcao-btn").forEach(b => {
+                b.disabled = bloqueado;
+                if (bloqueado) b.classList.remove("aluno-selecionada");
+            });
 
             const letras = opcoes.map(o => o.letra);
             const cores = opcoes.map(o => o.cor);
@@ -93,20 +109,30 @@ document.addEventListener("DOMContentLoaded", async () => {
                 body: JSON.stringify({ letra: resposta })
             });
 
-            if (!resp.ok) throw new Error("Erro ao enviar resposta");
+            if (!resp.ok) {
+                const errorData = await resp.json();
+                if (errorData.erro === "Usuário já respondeu") {
+                    alert("Você já respondeu nesta rodada.");
+                } else {
+                    alert(errorData.erro || "Erro ao enviar resposta");
+                }
+            } else {
+                alert("Resposta enviada com sucesso!");
+            }
 
-            localStorage.setItem(`resposta_${codigo}`, resposta);
-            document.querySelectorAll(".aluno-opcao-btn").forEach(b => b.disabled = true);
             btnEnviar.disabled = true;
-            alert("Resposta enviada com sucesso!");
+            document.querySelectorAll(".aluno-opcao-btn").forEach(b => {
+                b.disabled = true;
+                b.classList.remove("aluno-selecionada");
+            });
 
-            await carregarDados(); // atualiza gráfico com novas contagens
+            await carregarDados(); // atualiza gráfico e contador
+
         } catch (e) {
             alert("Erro ao enviar resposta.");
             console.error(e);
         }
     };
 
-    // Atualização automática a cada 10 segundos (opcional)
-    setInterval(carregarDados, 10000);
+    setInterval(carregarDados, 5000);
 });

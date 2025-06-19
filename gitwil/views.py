@@ -52,6 +52,9 @@ def professor():
 @app.route('/professor/<codigo>')
 @login_required
 def professor_mon(codigo):
+    if codigo not in salas:
+        flash("Sala não encontrada.")
+        return redirect(url_for('professor'))
     return render_template('professor_mon.html', codigo=codigo)
 
 
@@ -94,7 +97,8 @@ def api_sala(codigo):
     return jsonify({
         "opcoes": sala["opcoes"],
         "respostas_ativas": sala.get("respostas_ativas", False),
-        "respostas": sala.get("respostas", {})
+        "respostas": sala.get("respostas", {}),
+        "respondentes": list(sala.get("respondentes", set()))
     })
 
 
@@ -103,17 +107,29 @@ def responder(codigo):
     sala = salas.get(codigo)
     if not sala:
         return jsonify({"erro": "Sala não encontrada"}), 404
-    
+
     if not sala.get("respostas_ativas", False):
         return jsonify({"erro": "Respostas não estão ativas"}), 403
-    
+
+    user_id = session.get('user_id')
+    if not user_id:
+        user_id = gerar_codigo_aleatorio(12)
+        session['user_id'] = user_id
+
+    respondentes = set(sala.get("respondentes", []))
+    if user_id in respondentes:
+        return jsonify({"erro": "Usuário já respondeu"}), 403
+
     data = request.get_json()
     letra = data.get("letra")
     if letra not in [opt["letra"] for opt in sala["opcoes"]]:
         return jsonify({"erro": "Opção inválida"}), 400
-    
+
     sala["respostas"][letra] = sala["respostas"].get(letra, 0) + 1
-    
+
+    respondentes.add(user_id)
+    sala["respondentes"] = list(respondentes)
+
     return jsonify({"sucesso": True, "respostas": sala["respostas"]})
 
 
@@ -122,19 +138,27 @@ def dados_sala(codigo):
     sala = salas.get(codigo)
     if not sala:
         return jsonify({"erro": "Sala não encontrada"}), 404
+    
+    respondentes = sala.get("respondentes", set())
+    num_respondentes = len(respondentes)
+    
     return jsonify({
         "opcoes": sala["opcoes"],
-        "respostas": sala["respostas"]
+        "respostas": sala["respostas"],
+        "num_respondentes": num_respondentes
     })
 
 
+
 @app.route('/api/sala/<codigo>/resetar_respostas', methods=['POST'])
+@login_required 
 def resetar_respostas(codigo):
     sala = salas.get(codigo)
     if not sala:
         return jsonify({"erro": "Sala não encontrada"}), 404
 
     sala["respostas"] = {op['letra']: 0 for op in sala["opcoes"]}
+    sala["respondentes"] = []
     sala["respostas_ativas"] = True
     return jsonify({"sucesso": True})
 

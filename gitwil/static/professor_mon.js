@@ -1,16 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const codigo = params.get("codigo");
-
   const elCodigoSala = document.getElementById("mon-codigo-sala");
   const elRespostasContador = document.getElementById("mon-respostas-contador");
   const elPessoasContador = document.getElementById("mon-pessoas-contador");
   const canvas = document.getElementById("mon-grafico-pizza");
-
-  if (!codigo) {
-    alert("Código da sala não encontrado na URL.");
-    return;
-  }
 
   elCodigoSala.textContent = codigo;
 
@@ -77,10 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Apagar sala
-  document.getElementById("mon-btn-reset-sala").onclick = async () => {
+  document.getElementById("mon-btn-del-sala").onclick = async () => {
     if (confirm("Deseja apagar completamente a sala e todas as respostas?")) {
       await fetch(`/api/sala/${codigo}/apagar`, { method: "POST" });
-      location.href = "/";
+      location.href = "/professor";
     }
   };
 

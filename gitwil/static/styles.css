@@ -792,3 +792,13 @@ body.aluno-body {
   height: auto;
   margin: auto;
 }
+
+#aluno-respondentes-count,
+#aluno-respondentes-count::before {
+  color: black;
+}
+
+p span,
+p {
+  color: black;
+}

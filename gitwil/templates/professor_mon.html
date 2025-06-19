@@ -7,6 +7,10 @@
   <!-- Estilos -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script>
+    const codigo = "{{ codigo }}";
+  </script>
+
 </head>
 <body>
 
@@ -35,7 +39,7 @@
           <i class="bi bi-clipboard"></i> Copiar Gráfico
         </button>
         <button id="mon-btn-reset-respostas" class="btn-personalizado amarelo">Resetar Respostas</button>
-        <button id="mon-btn-reset-sala" class="btn-personalizado verde">Resetar Sala</button>
+        <button id="mon-btn-del-sala" class="btn-personalizado verde">Excluir Sala</button>
         <button id="mon-btn-voltar" class="btn-personalizado azul">Voltar</button>
         <button id="mon-btn-sair" class="btn-personalizado vermelho">Sair</button>
       </div>
@@ -44,6 +48,6 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="{{ url_for('static', filename='js/professor_mon.js') }}"></script>
+  <script src="{{ url_for('static', filename='professor_mon.js') }}"></script>
 </body>
 </html>
